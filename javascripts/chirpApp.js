@@ -18,6 +18,7 @@ app.controller('audioController', function($scope, ngAudio) {
 
     $scope.convert = function() {
         var audioOutput = document.getElementById("audioOutput");
+		console.log("teste");
         if (audioOutput.value == "Convertendo para .mp3") {
             console.log("mp3");
 
@@ -198,3 +199,40 @@ function playAudioTracks() {
     var playTime = 0;
     var index = 0;
 }
+
+
+app.controller('mainController', function($rootScope, $scope, postService) {
+    $scope.posts = postService.query();
+    $scope.newPost = { created_by: '', text: '', created_at: '' };
+
+    $scope.post = function() {
+        $scope.newPost.created_by = $rootScope.current_user;
+        $scope.newPost.created_at = Date.now();
+        postService.save($scope.newPost, function() {
+            $scope.posts = postService.query();
+            $scope.newPost = { created_by: '', text: '', created_at: '' };
+        });
+    };
+    $scope.record = function() {};
+});
+
+app.controller('authController', function($scope, $rootScope, $http, $location) {
+    $scope.user = { username: '', password: '' };
+    $scope.error_message = '';
+
+    $scope.login = function() {
+        $http.post('/auth/login', $scope.user).success(function(data) {
+            $rootScope.authenticated = true;
+            $rootScope.current_user = data.user.username;
+            $location.path('/');
+        });
+    };
+
+    $scope.register = function() {
+        $http.post('/auth/signup', $scope.user).success(function(data) {
+            $rootScope.authenticated = true;
+            $rootScope.current_user = data.user.username;
+            $location.path('/');
+        });
+    };
+});
