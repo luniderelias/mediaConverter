@@ -1,15 +1,47 @@
-<div class="clearfix">
-	<form ng-Submit="post()" ng-show='authenticated'>
-		<h4>{{current_user}} says</h4>
-		<textarea required class="form-control" maxlength="200" rows="3" placeholder="Say something" ng-model="newPost.text"></textarea>
-		<input class="btn submit-btn pull-right" type="submit" value="Chirp!" />
-	</form>
-	<div id="post-stream">
-		<h4>Chirp Feed</h4>
-			<div class="post" ng-repeat="post in posts | orderBy:'created_at':true" ng-class-odd="'odd'" ng-class-even="'even'"> 
-				<p>{{post.text}}</p>
-				<small>Posted by @{{post.created_by}}</small>
-				<small class="pull-right">{{post.created_at | date:"h:mma 'on' MMM d, y"}}</small>
-			</div>
-	</div>
+<!DOCTYPE html>
+<div class="container-fluid text-center">
+    <div class="row content">
+        <div class="col-sm-3 sidenav">
+            <div class="row content" keypress-events>
+                <form ng-submit="record()" ng-controller="MainCtrl">
+                    <shortcut></shortcut>
+                    <h1>Key Pressed Code: {{keyCode}}</h1>
+                    <h1>Time: {{remainingTime}} seconds</h1>
+                    <button id="saveButton" type="button" onclick="saveMp3File();">Save</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-6 sidenav">
+            <div ng-controller="pianoController">
+                <shortcut></shortcut>
+                <canvas id="myCanvas" width="500" height="150">
+                </canvas>
+            </div>
+            <div class="row content">
+                <h1>Note: Each keyboard key touches a piano key</h1>
+                <h1>Command: 'shift + a' Lower piano keys</h1>
+                <h1>Command: 'shift + d' Higher piano keys</h1>
+                <h1>Command: 'space' Start/Stop Recording</h1>
+                <h1>Command: 'enter' Play current recording in loop</h1>
+            </div>
+            <div class="row content">
+                <div id="post-stream">
+                    <h4>Chirp Feed</h4>
+                    <div class="post" ng-repeat="post in posts | orderBy:'created_at':true" ng-class-odd="'odd'" ng-class-even="'even'">
+                        <p>{{post.text}}</p>
+                        <small>Posted by @{{post.created_by}}</small>
+                        <small class="pull-right">{{post.created_at | date:"h:mma 'on' MMM d, y"}}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3 sidenav">
+            <div class="well">
+                <p>Announce here!</p>
+            </div>
+            <div class="well">
+                <p>Announce here!</p>
+            </div>
+        </div>
+    </div>
 </div>

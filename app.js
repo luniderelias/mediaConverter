@@ -11,9 +11,12 @@ var index = require('./routes/index');
 var api = require('./routes/api');
 var authenticate = require('./routes/authenticate')(passport);
 var mongoose = require('mongoose');
+
+
+
 //connect to mongodb
-mongoose.connect("mongodb://heroku_n0t6tlht:1l3nrq858j579tafmu8cgfamer@ds159013.mlab.com:59013/heroku_n0t6tlht",{
-  useMongoClient: true,
+mongoose.connect("mongodb://heroku_0rzv6md7:nh7c5ijri46s3bam6eb8li6qj0@ds139072.mlab.com:39072/heroku_0rzv6md7",{
+    useMongoClient: true,
 });
 
 
@@ -28,7 +31,7 @@ app.set('view engine', 'ejs');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(session({
-  secret: 'keyboard cat'
+    secret: 'keyboard cat'
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -46,9 +49,9 @@ app.use('/api', api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
 // Initialize Passport
